@@ -5,10 +5,6 @@
 library(stargazer)
 library(ggplot2)
 
-# Declaring the filepath for the data file
-
-filepath <- 'C:/Users/User/Documents/Data/cement/cement.csv'
-
 # Reading in the panel data
 
 cement <- read.csv(filepath, fileEncoding = 'UTF-8-BOM')
@@ -170,12 +166,11 @@ plot(log(cement$Population),log(cement$Cement))
 
 par(mfrow = c(2,2))
 plot(cement$Population.Growth.Rate, log(cement$Cement))
-plot(cement$CO2.Intensity, log(cement$Cement))
 plot(log(cement$CO2.Emissions), log(cement$Cement))
 plot(cement$CO2.Emissions.per.capita, log(cement$Cement))
+plot(cement$CO2.Emissions.from.M.C, log(cement$Cement))
 
 par(mfrow = c(2,2))
-plot(cement$CO2.Emissions.from.M.C, log(cement$Cement))
 plot(cement$Land.Area, log(cement$Cement))
 plot(cement$Ores.and.Metals.Exports, log(cement$Cement))
 plot(cement$Ores.and.Metals.Imports, log(cement$Cement))
@@ -336,31 +331,31 @@ stargazer(ar25, ar26, ar27, ar28, type = 'text') # General KP effects with 5YPs 
 # Writing results to file
 
 write.csv(stargazer(ar1, ar2, ar3, ar4, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_1_no_KP.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_1_no_KP.txt'), row.names = FALSE)
 write.csv(stargazer(ar1, ar2, ar3, ar4),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_1_no_KP_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_1_no_KP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar5, ar6, ar7, ar8, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_2_KP_effects_by_phase.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_2_KP_effects_by_phase.txt'), row.names = FALSE)
 write.csv(stargazer(ar5, ar6, ar7, ar8),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_2_KP_effects_by_phase_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_2_KP_effects_by_phase_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar9, ar10, ar11, ar12, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_3_KP_general.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_3_KP_general.txt'), row.names = FALSE)
 write.csv(stargazer(ar9, ar10, ar11, ar12),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_3_KP_general_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_3_KP_general_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar13, ar14, ar15, ar16, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_4_KP_effects_by_phase_5YP.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_4_KP_effects_by_phase_5YP.txt'), row.names = FALSE)
 write.csv(stargazer(ar13, ar14, ar15, ar16),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_4_KP_effects_by_phase_5YP_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_4_KP_effects_by_phase_5YP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar17, ar18, ar19, ar20, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_5_KP_effects_by_phase_5YP.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_5_KP_effects_by_phase_5YP.txt'), row.names = FALSE)
 write.csv(stargazer(ar17, ar18, ar19, ar20),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_5_KP_effects_by_phase_5YP_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_5_KP_effects_by_phase_5YP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar21, ar22, ar23, ar24, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_6_KP_general_5YP.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_6_KP_general_5YP.txt'), row.names = FALSE)
 write.csv(stargazer(ar21, ar22, ar23, ar24),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_6_KP_general_5YP_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_6_KP_general_5YP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar25, ar26, ar27, ar28, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_7_KP_general_5YP_FE.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_7_KP_general_5YP_FE.txt'), row.names = FALSE)
 write.csv(stargazer(ar25, ar26, ar27, ar28),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_7_KP_general_5YP_FE_tex.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_7_KP_general_5YP_FE_tex.txt'), row.names = FALSE)
 
