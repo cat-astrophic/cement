@@ -5,10 +5,6 @@
 library(stargazer)
 library(ggplot2)
 
-# Declaring the filepath for the data file
-
-filepath <- 'C:/Users/User/Documents/Data/cement/cement.csv'
-
 # Reading in the panel data
 
 cement <- read.csv(filepath, fileEncoding = 'UTF-8-BOM')
@@ -56,7 +52,7 @@ stargazer(i1, i2, i3, i4, i5, i6, type = 'text')
 # Writing results to file
 
 write.csv(stargazer(i1, i2, i3, i4, i5, i6, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/intensity_regression_results.txt', row.names = FALSE)
+          paste(directory, 'intensity_regression_results.txt'), row.names = FALSE)
 write.csv(stargazer(i1, i2, i3, i4, i5, i6),
-          'C:/Users/User/Documents/Data/cement/intensity_regression_results_tex.txt', row.names = FALSE)
+          paste(directory, 'intensity_regression_results_tex.txt'), row.names = FALSE)
 
