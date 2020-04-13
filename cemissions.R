@@ -1,4 +1,4 @@
-# This script performs the data analysis for a paper on the effect of the Kyoto Protocol on cement manufacturing
+# This script performs the data analysis for a paper on the effect of the Kyoto Protocol on CO2 emissions from cement manufacturing
 
 # Loading libraries
 
