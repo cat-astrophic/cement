@@ -5,9 +5,6 @@
 library(stargazer)
 library(ggplot2)
 
-# Declaring the filepath for the data file
-
-filepath <- 'C:/Users/User/Documents/Data/cement/cement.csv'
 
 # Reading in the panel data
 
@@ -123,12 +120,11 @@ plot(log(cement$Population),log(cement$Cement.Emissions))
 
 par(mfrow = c(2,2))
 plot(cement$Population.Growth.Rate, log(cement$Cement.Emissions))
-plot(cement$CO2.Intensity, log(cement$Cement.Emissions))
 plot(log(cement$CO2.Emissions), log(cement$Cement.Emissions))
 plot(cement$CO2.Emissions.per.capita, log(cement$Cement.Emissions))
+plot(cement$CO2.Emissions.from.M.C, log(cement$Cement.Emissions))
 
 par(mfrow = c(2,2))
-plot(cement$CO2.Emissions.from.M.C, log(cement$Cement.Emissions))
 plot(cement$Land.Area, log(cement$Cement.Emissions))
 plot(cement$Ores.and.Metals.Exports, log(cement$Cement.Emissions))
 plot(cement$Ores.and.Metals.Imports, log(cement$Cement.Emissions))
@@ -289,31 +285,31 @@ stargazer(ear25, ear26, ear27, ear28, type = 'text') # General KP effects with 5
 # Writing results to file
 
 write.csv(stargazer(ear1, ear2, ear3, ear4, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/cement_regression_results_1_no_KP.txt', row.names = FALSE)
+          paste(directory, 'cement_regression_results_1_no_KP.txt'), row.names = FALSE)
 write.csv(stargazer(ear1, ear2, ear3, ear4),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_1_no_KP_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_1_no_KP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear5, ear6, ear7, ear8, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_2_KP_effects_by_phase.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_2_KP_effects_by_phase.txt'), row.names = FALSE)
 write.csv(stargazer(ear5, ear6, ear7, ear8),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_2_KP_effects_by_phase_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_2_KP_effects_by_phase_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear9, ear10, ear11, ear12, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_3_KP_general.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_3_KP_general.txt'), row.names = FALSE)
 write.csv(stargazer(ear9, ear10, ear11, ear12),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_3_KP_general_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_3_KP_general_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear13, ear14, ear15, ear16, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_4_KP_effects_by_phase_5YP.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_4_KP_effects_by_phase_5YP.txt'), row.names = FALSE)
 write.csv(stargazer(ear13, ear14, ear15, ear16),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_4_KP_effects_by_phase_5YP_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_4_KP_effects_by_phase_5YP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear17, ear18, ear19, ear20, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_5_KP_effects_by_phase_5YP.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_5_KP_effects_by_phase_5YP.txt'), row.names = FALSE)
 write.csv(stargazer(ear17, ear18, ear19, ear20),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_5_KP_effects_by_phase_5YP_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_5_KP_effects_by_phase_5YP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear21, ear22, ear23, ear24, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_6_KP_general_5YP.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_6_KP_general_5YP.txt'), row.names = FALSE)
 write.csv(stargazer(ear21, ear22, ear23, ear24),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_6_KP_general_5YP_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_6_KP_general_5YP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear25, ear26, ear27, ear28, type = 'text'),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_7_KP_general_5YP_FE.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_7_KP_general_5YP_FE.txt'), row.names = FALSE)
 write.csv(stargazer(ear25, ear26, ear27, ear28),
-          'C:/Users/User/Documents/Data/cement/emissions_regression_results_7_KP_general_5YP_FE_tex.txt', row.names = FALSE)
+          paste(directory, 'emissions_regression_results_7_KP_general_5YP_FE_tex.txt'), row.names = FALSE)
 
