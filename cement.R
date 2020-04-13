@@ -17,7 +17,7 @@ c_sums <- c()
 for (i in 1990:2016) {
   
   d <- cement[which(cement$Year == i),]
-  c_sums[[i-1989]] <- sum(d$Cement, na.rm = T) / 1000000
+  c_sums[[i-1989]] <- sum(d$Cement, na.rm = TRUE) / 1000000
   yrs[[i-1989]] <- i
   
 }
@@ -33,6 +33,9 @@ ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
   theme(legend.position = 'none', plot.title = element_text(hjust = 0.5)) +
   ylim(0,4.5) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14))
 
+dev.copy(png, paste(directory, 'cement_fig_1.png'))
+dev.off()
+
 # Second Plot - Global cement production with Kyoto Protocol phases indicated
 
 ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
@@ -43,7 +46,10 @@ ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
   ylim(0,4.5) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
   geom_vline(xintercept = 2008) +
   geom_vline(xintercept = 2013)
-  
+
+dev.copy(png, paste(directory, 'cement_fig_2.png'))
+dev.off()
+
 # Third plot - Global cement production with five year plans indicated
 
 ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
@@ -59,6 +65,9 @@ ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
   geom_vline(xintercept = 2010) +
   geom_vline(xintercept = 2015)
 
+dev.copy(png, paste(directory, 'cement_fig_3.png'))
+dev.off()
+
 # Subsetting cement data into China v rest-of-world data
 
 china <- cement[which(cement$Country == 'China'),]
@@ -70,8 +79,8 @@ for (i in 1990:2016) {
   
   d2 <- china[which(china$Year == i),]
   d3 <- others[which(others$Year == i),]
-  c2_sums[[i-1989]] <- sum(d2$Cement, na.rm = T) / 1000000
-  c3_sums[[i-1989]] <- sum(d3$Cement, na.rm = T) / 1000000
+  c2_sums[[i-1989]] <- sum(d2$Cement, na.rm = TRUE) / 1000000
+  c3_sums[[i-1989]] <- sum(d3$Cement, na.rm = TRUE) / 1000000
   
 }
 
@@ -88,6 +97,9 @@ ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
   ylim(0,3) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
   theme(legend.title = element_blank())
 
+dev.copy(png, paste(directory, 'cement_fig_4.png'))
+dev.off()
+
 # Fifth Plot - China v rest-of-world cement production with Kyoto Protocol phases indicated
 
 ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
@@ -100,6 +112,9 @@ ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
   theme(legend.title = element_blank()) +
   geom_vline(xintercept = 2008) + 
   geom_vline(xintercept = 2012)
+
+dev.copy(png, paste(directory, 'cement_fig_5.png'))
+dev.off()
 
 # Sixth Plot - China v rest-of-world cement production with five year plans indicated
 
@@ -118,6 +133,9 @@ ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
   geom_vline(xintercept = 2010) +
   geom_vline(xintercept = 2015)
 
+dev.copy(png, paste(directory, 'cement_fig_6.png'))
+dev.off()
+
 # Seventh Plot - Chinese cement production
 
 ggplot(data = gtemp.df, aes(x = Year, y = value)) + 
@@ -126,6 +144,9 @@ ggplot(data = gtemp.df, aes(x = Year, y = value)) +
   geom_line(aes(y = C , col = 'China'), size = 2, alpha = 1) +
   theme(legend.position = 'none', plot.title = element_text(hjust = 0.5)) +
   ylim(0,3) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14))
+
+dev.copy(png, paste(directory, 'cement_fig_7.png'))
+dev.off()
 
 # Eighth Plot - chinese cement production with five year plans indicated
 
@@ -142,6 +163,9 @@ ggplot(data = gtemp.df, aes(x = Year, y = value)) +
   geom_vline(xintercept = 2010) +
   geom_vline(xintercept = 2015)
 
+dev.copy(png, paste(directory, 'cement_fig_8.png'))
+dev.off()
+
 # Ninth Plot - All 3 cement production time series
 
 df <- data.frame(Year = c(yrs), W = c(c_sums), C = c(c2_sums), ROW = c(c3_sums))
@@ -155,6 +179,9 @@ ggplot(data = df, aes(x = Year, y = value, color = variable)) +
   theme(legend.position = c(.15,85), plot.title = element_text(hjust = 0.5)) +
   ylim(0,4.5) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
   theme(legend.title = element_blank())
+
+dev.copy(png, paste(directory, 'cement_fig_9.png'))
+dev.off()
 
 # Visualizing relationships between the data
 
