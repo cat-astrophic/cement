@@ -303,7 +303,7 @@ stargazer(ear25, ear26, ear27, ear28, type = 'text') # General KP effects with 5
 # Writing results to file
 
 write.csv(stargazer(ear1, ear2, ear3, ear4, type = 'text'),
-          paste(directory, 'cement_regression_results_1_no_KP.txt'), row.names = FALSE)
+          paste(directory, 'emissions_regression_results_1_no_KP.txt'), row.names = FALSE)
 write.csv(stargazer(ear1, ear2, ear3, ear4),
           paste(directory, 'emissions_regression_results_1_no_KP_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ear5, ear6, ear7, ear8, type = 'text'),
