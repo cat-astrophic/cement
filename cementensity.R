@@ -20,7 +20,7 @@ plot(cement$Year,cement$Intensity)
 
 # We see that there are some extreme outliers in the above plot so we remove them -- anything above 99.5 percentile
 
-cutoff <- quantile(xxx, c(.995), na.rm = TRUE)
+cutoff <- quantile(cement$Intensity, c(.995), na.rm = TRUE)
 cement <- cement[which(cement$Intensity <= cutoff),]
 
 # Plotting data
