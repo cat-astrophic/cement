@@ -45,9 +45,25 @@ i5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + 
 i6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
+ii1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+
+ii2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+
+ii3 <- lm(Intensity ~ Lagged.Intensity*KP + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+
+ii4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
+         + factor(Year), data = cement)
+
+ii5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
+          + factor(Year), data = cement)
+
+ii6 <- lm(Intensity ~ Lagged.Intensity*KP + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
+          + factor(Year), data = cement)
+
 # Viewing results
 
 stargazer(i1, i2, i3, i4, i5, i6, type = 'text')
+stargazer(ii1, ii2, ii3, ii4, ii5, ii6, type = 'text')
 
 # Writing results to file
 
@@ -55,6 +71,10 @@ write.csv(stargazer(i1, i2, i3, i4, i5, i6, type = 'text'),
           paste(directory, 'intensity_regression_results.txt'), row.names = FALSE)
 write.csv(stargazer(i1, i2, i3, i4, i5, i6),
           paste(directory, 'intensity_regression_results_tex.txt'), row.names = FALSE)
+write.csv(stargazer(ii1, ii2, ii3, ii4, ii5, ii6, type = 'text'),
+          paste(directory, 'intensity_regression_results_2.txt'), row.names = FALSE)
+write.csv(stargazer(ii1, ii2, ii3, ii4, ii5, ii6),
+          paste(directory, 'intensity_regression_results_2_tex.txt'), row.names = FALSE)
 
 # Creating figures for the paper
 
