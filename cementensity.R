@@ -128,7 +128,21 @@ ggplot(data = Cint.df, aes(x = Year, y = value, color = variable)) +
 dev.copy(png, paste(directory, 'cementensity_fig_2.png'))
 dev.off()
 
-# Third plot -- visualizing the relationship between income and carbon intensities -- High income countries have GDP per capita >= 40,000
+# Third plot -- carbon intensities 10 years prior to KP
+
+ggplot(data = Cint.df[which(Cint.df$Year < 2008),], aes(x = Year, y = value, color = variable)) +
+  ggtitle('Carbon Intensity for Global Cement Production by Year\nwith Kyoto Protocol Indicators') +
+  ylab('Carbon Intensity (kg of C per kg of Cement)') +
+  geom_line(aes(y = World, col = 'Global Average'), size = 2, alpha = 1) +
+  geom_line(aes(y = US, col = 'USA'), size = 2, alpha = 1) +
+  geom_line(aes(y = China, col = 'China'), size = 2, alpha = 1) +
+  theme(legend.position = c(0.2,0.2), plot.title = element_text(hjust = 0.5)) +
+  ylim(0.03695,0.03715) + theme(legend.title = element_blank())
+
+dev.copy(png, paste(directory, 'introfig.png'))
+dev.off()
+
+# Fourth plot -- visualizing the relationship between income and carbon intensities -- High income countries have GDP per capita >= 40,000
 
 cement <- cement[which(cement$Cement > 0 & cement$Intensity > 0),]
 high <- cement[which(cement$GDP.per.capita >= 30000),]
@@ -164,7 +178,7 @@ ggplot(data = Cint.df[which(Cint.df$Year < 2008),], aes(x = Year, y = value)) +
 dev.copy(png, paste(directory, 'cementensity_fig_3.png'))
 dev.off()
 
-# Fourth plot -- an extension of the thrid plot
+# Fifth plot -- an extension of the fourth plot
 
 ggplot(data = Cint.df[which(Cint.df$Year < 2012),], aes(x = Year, y = value)) +
   ggtitle('Relationship Between GDP per capita and Carbon Intensity') +
