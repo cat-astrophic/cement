@@ -176,7 +176,7 @@ ggplot(data = df, aes(x = Year, y = value, color = variable)) +
   geom_line(aes(y = C , col = 'China'), size = 2, alpha = 1) +
   geom_line(aes(y = W , col = 'World'), size = 2, alpha = 1) +
   geom_line(aes(y = ROW , col = 'Rest of World'), size = 2, alpha = 1) +
-  theme(legend.position = c(.15,85), plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position = c(.15,.85), plot.title = element_text(hjust = 0.5)) +
   ylim(0,4.5) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
   theme(legend.title = element_blank())
 
