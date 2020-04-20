@@ -137,7 +137,8 @@ ggplot(data = Cint.df[which(Cint.df$Year < 2008),], aes(x = Year, y = value, col
   geom_line(aes(y = US, col = 'USA'), size = 2, alpha = 1) +
   geom_line(aes(y = China, col = 'China'), size = 2, alpha = 1) +
   theme(legend.position = c(0.2,0.2), plot.title = element_text(hjust = 0.5)) +
-  ylim(0.03695,0.03715) + theme(legend.title = element_blank())
+  ylim(0.03695,0.03715) + theme(legend.title = element_blank()) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 9))
 
 dev.copy(png, paste(directory, 'introfig.png'))
 dev.off()
