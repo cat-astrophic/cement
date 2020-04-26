@@ -25,7 +25,7 @@ for (i in 1990:2014) {
 
 all.df = data.frame(Year = c(yrs), C = c(c_sums))
 
-# First plot - Global cement production
+# First plot - Global CO2 emissions from cement production
 
 ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
   ggtitle('CO2 Emissions from Global Cement Production by Year') +
@@ -37,7 +37,7 @@ ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
 dev.copy(png, paste(directory, 'cemissions_fig_1.png'))
 dev.off()
 
-# Second Plot - Global cement production with Kyoto Protocol phases indicated
+# Second Plot - Global CO2 emissions from cement production with Kyoto Protocol phases indicated
 
 ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
   ggtitle('CO2 Emissions from Global Cement Production by Year\nwith Kyoto Protocol Indicators') +
@@ -51,7 +51,7 @@ ggplot(data = all.df, aes(x = Year, y = value, color = variable)) +
 dev.copy(png, paste(directory, 'cemissions_fig_2.png'))
 dev.off()
 
-# Subsetting cement data into China v rest-of-world data
+# Subsetting CO2 emissions from cement data into China v rest-of-world data
 
 china <- cement[which(cement$Country == 'China'),]
 others <- cement[which(cement$Country != 'China'),]
@@ -67,23 +67,26 @@ for (i in 1990:2014) {
   
 }
 
-gtemp.df = data.frame(Year = c(yrs), C = c(c2_sums), ROW = c(c3_sums))
+gtemp.df = data.frame(Year = c(yrs), C = c(c2_sums), ROW = c(c3_sums), W = c(c_sums))
 
-# Third Plot - China v rest-of-world cement production
+# Third Plot - China v rest-of-world CO2 emissions from cement production
 
 ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
   ggtitle('CO2 Emissions from Cement Production by Year:\nChina v. Rest of World') +
   ylab('CO2 Emissions (million metric tons)') +
-  geom_line(aes(y = C , col = 'China'), size = 2, alpha = 1) +
+  geom_line(aes(y = W, col = 'World'), size = 2, alpha = 1) +
+  geom_line(aes(y = C, col = 'China'), size = 2, alpha = 1) +
   geom_line(aes(y = ROW, col = 'Rest of World'),  size = 2, alpha = 1) +
   theme(legend.position = c(.15,.85), plot.title = element_text(hjust = 0.5)) +
-  ylim(0,350) + scale_x_continuous(breaks = scales::pretty_breaks(n = 12)) +
-  theme(legend.title = element_blank())
+  ylim(0,650) + scale_x_continuous(breaks = scales::pretty_breaks(n = 12)) +
+  theme(legend.title = element_blank()) +
+  geom_vline(xintercept = 2008) +
+  geom_vline(xintercept = 2013)
 
 dev.copy(png, paste(directory, 'cemissions_fig_3.png'))
 dev.off()
 
-# Fourth Plot - China v rest-of-world cement production with Kyoto Protocol phases indicated
+# Fourth Plot - China v rest-of-world CO2 emissions from cement production with Kyoto Protocol phases indicated
 
 ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
   ggtitle('CO2 Emissions from Cement Production by Year:\nChina v. Rest of World') +
@@ -94,12 +97,12 @@ ggplot(data = gtemp.df, aes(x = Year, y = value, color = variable)) +
   ylim(0,350) + scale_x_continuous(breaks = scales::pretty_breaks(n = 12)) +
   theme(legend.title = element_blank()) +
   geom_vline(xintercept = 2008) + 
-  geom_vline(xintercept = 2012)
+  geom_vline(xintercept = 2013)
 
 dev.copy(png, paste(directory, 'cemissions_fig_4.png'))
 dev.off()
 
-# Fifth Plot - Chinese cement production
+# Fifth Plot - Chinese CO2 emissions from cement production
 
 ggplot(data = gtemp.df, aes(x = Year, y = value)) + 
   ggtitle('CO3 Emissions from Chinese Cement Production by Year') +
@@ -111,7 +114,7 @@ ggplot(data = gtemp.df, aes(x = Year, y = value)) +
 dev.copy(png, paste(directory, 'cemissions_fig_5.png'))
 dev.off()
 
-# Sixth Plot - All 3 cement production time series
+# Sixth Plot - All 3 CO2 emissions from cement production time series
 
 df <- data.frame(Year = c(yrs), W = c(c_sums), C = c(c2_sums), ROW = c(c3_sums))
 
