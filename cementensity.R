@@ -122,10 +122,11 @@ ggplot(data = Cint.df, aes(x = Year, y = value, color = variable)) +
   geom_line(aes(y = US, col = 'USA'), size = 2, alpha = 1) +
   geom_line(aes(y = China, col = 'China'), size = 2, alpha = 1) +
   theme(legend.position = c(0.2,0.2), plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 7)) +
   ylim(0.03695*3.6667,0.03715*3.6667) + theme(legend.title = element_blank()) +
   geom_vline(xintercept = 2008) + geom_vline(xintercept = 2013)
 
-dev.copy(png, paste(directory, 'cementensity_fig_2.png'))
+dev.copy(png, paste(directory, 'introfig.png'))
 dev.off()
 
 # Third plot -- carbon intensities 10 years prior to KP
@@ -140,7 +141,7 @@ ggplot(data = Cint.df[which(Cint.df$Year < 2008),], aes(x = Year, y = value, col
   ylim(0.03695*3.6667,0.03715*3.6667) + theme(legend.title = element_blank()) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 9))
 
-dev.copy(png, paste(directory, 'introfig.png'))
+dev.copy(png, paste(directory, 'cementensity_fig_2.png'))
 dev.off()
 
 # Fourth plot -- visualizing the relationship between income and carbon intensities -- High income countries have GDP per capita >= 40,000
