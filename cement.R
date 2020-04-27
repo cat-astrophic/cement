@@ -298,7 +298,7 @@ stargazer(ar25, ar27, type = 'text') # General KP effects with 5YPs with year FE
 
 write.csv(stargazer(ar1, ar3, ar5, ar7, ar13, ar15, ar21, ar23, type = 'text'),
           paste(directory, 'cement_regression_results_phases.txt'), row.names = FALSE)
-write.csv(stargazer(ar1, ar3, ar5, ar7, ar13, ar15, ar21, ar23,),
+write.csv(stargazer(ar1, ar3, ar5, ar7, ar13, ar15, ar21, ar23),
           paste(directory, 'cement_regression_results_phases_tex.txt'), row.names = FALSE)
 write.csv(stargazer(ar1, ar3, ar9, ar11, ar17, ar19, ar25, ar27, type = 'text'),
           paste(directory, 'cement_regression_results_all.txt'), row.names = FALSE)
