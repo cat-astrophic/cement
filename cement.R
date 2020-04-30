@@ -219,68 +219,68 @@ cement <- cement[which(abs(cement$Real.Interest.Rate) < 50),]
 
 # Running autoregressive models
 
-ar1 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar1 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
           + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
 
-ar3 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar3 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading, data = cement)
 
-ar5 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar5 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
           + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading, data = cement)
 
-ar7 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar7 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
           + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II, data = cement)
 
-ar9 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar9 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
          + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
          + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading, data = cement)
 
-ar11 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar11 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP, data = cement)
 
-ar13 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar13 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading
            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
 
-ar15 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar15 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
 
-ar17 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar17 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading
            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
 
-ar19 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar19 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
 
-ar21 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar21 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading
            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
 
-ar23 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar23 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
 
-ar25 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar25 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading
            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
 
-ar27 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area)
+ar27 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports)
            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
 
