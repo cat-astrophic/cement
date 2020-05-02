@@ -28,19 +28,19 @@ plot(cement$Year,cement$Differenced)
 
 # Running Carbon intensity regressions for cement manufacturing
 
-i1 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+i1 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
 
-i2 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+i2 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
 
-i3 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+i3 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
 
-i4 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
+i4 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
-i5 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
+i5 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
-i6 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
+i6 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
 # Viewing results
