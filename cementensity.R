@@ -58,13 +58,13 @@ ii3 <- lm(Intensity ~ Lagged.Intensity*KP + log(GDP.per.capita) + Lagged.R.D + R
           + Emissions.Trading, data = cement)
 
 ii4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading+ factor(Year), data = cement)
+          + Emissions.Trading + factor(Year), data = cement)
 
 ii5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading+ factor(Year), data = cement)
+          + Emissions.Trading + factor(Year), data = cement)
 
 ii6 <- lm(Intensity ~ Lagged.Intensity*KP + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading+ factor(Year), data = cement)
+          + Emissions.Trading + factor(Year), data = cement)
 
 # Viewing results
 
@@ -197,5 +197,18 @@ ggplot(data = Cint.df[which(Cint.df$Year < 2012),], aes(x = Year, y = value)) +
   geom_vline(xintercept = 2008)
   
 dev.copy(png, paste(directory, 'cementensity_fig_4.png'))
+dev.off()
+
+# Sixth plot -- a baseline for the simulation plot
+
+ggplot(data = Cint.df[which(Cint.df$Year < 2008 & Cint.df$Year > 1997),], aes(x = Year, y = value)) +
+  ggtitle('Relationship Between GDP per capita and Carbon Intensity\nPrior to the Kyoto Protocol') +
+  ylab('Carbon Intensity (kg of C per kg of Cement)') +
+  geom_line(aes(y = High, col = 'High Income Nations'), size = 2, alpha = 1) +
+  geom_line(aes(y = Low, col = 'Low Income Nations'), size = 2, alpha = 1) +
+  theme(legend.position = c(0.19,0.81), legend.title = element_blank(), plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 9))
+
+dev.copy(png, paste(directory, 'simulation_baseline.png'))
 dev.off()
 
