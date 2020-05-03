@@ -108,8 +108,8 @@ for (yr in 1990:2007) {
 
 Cint.df <- data.frame(Year = c(yrs), High = c(hi), Low = c(li))
 
-ggplot(data = Cint.df[which(Cint.df$Year > 1997),], aes(x = Year, y = value)) +
-  ggtitle('Relationship Between GDP per capita and Carbon Intensity\nPrior to the Kyoto Protocol') +
+ggplot(data = Cint.df[which(Cint.df$Year > 1997 & Cint.df$Year < 2008),], aes(x = Year, y = value)) +
+  ggtitle('Relationship Between GDP per capita and Carbon Intensity\nPrior to the Kyoto Protocol (Simulated Data)') +
   ylab('Carbon Intensity (kg of C per kg of Cement)') +
   geom_line(aes(y = High, col = 'High Income Nations'), size = 2, alpha = 1) +
   geom_line(aes(y = Low, col = 'Low Income Nations'), size = 2, alpha = 1) +
