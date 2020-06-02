@@ -2,6 +2,7 @@
 
 # Loading libraries
 
+library(sandwich)
 library(stargazer)
 library(ggplot2)
 
@@ -43,14 +44,34 @@ i5 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading
 i6 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
+# Calculating robust standard errors
+
+cov1 <- vcovHC(i1, type = 'HC1')
+rsei1 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(i2, type = 'HC1')
+rsei2 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(i3, type = 'HC1')
+rsei3 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(i4, type = 'HC1')
+rsei4 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(i5, type = 'HC1')
+rsei5 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(i6, type = 'HC1')
+rsei6 <- sqrt(diag(cov1))
+
 # Viewing results
 
-stargazer(i1, i2, i3, i4, i5, i6, type = 'text')
+stargazer(i1, i2, i3, i4, i5, i6, type = 'text', se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6))
 
 # Writing results to file
 
-write.csv(stargazer(i1, i2, i3, i4, i5, i6, type = 'text'),
+write.csv(stargazer(i1, i2, i3, i4, i5, i6, type = 'text', se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6)),
           paste(directory, 'intensity_differenced_regression_results.txt'), row.names = FALSE)
-write.csv(stargazer(i1, i2, i3, i4, i5, i6),
+write.csv(stargazer(i1, i2, i3, i4, i5, i6, se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6)),
           paste(directory, 'intensity_differenced_regression_results_tex.txt'), row.names = FALSE)
 

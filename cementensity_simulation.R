@@ -2,6 +2,7 @@
 
 # Loading libraries
 
+library(sandwich)
 library(stargazer)
 library(ggplot2)
 
@@ -48,9 +49,9 @@ for (nat in nats) {
   
   for (yr in 1990:2007) {
       
-    intensity <- summary(mod)$coefficients[1,1] + summary(mod)$coefficients[2,1]*yr
-    gdp <- summary(income)$coefficients[1,1]  + summary(income)$coefficients[2,1]*yr
-    cem <- summary(ccc)$coefficients[1,1] + summary(ccc)$coefficients[2,1]*yr
+    intensity <- max(0,summary(mod)$coefficients[1,1] + summary(mod)$coefficients[2,1]*yr)
+    gdp <- max(0,summary(income)$coefficients[1,1]  + summary(income)$coefficients[2,1]*yr)
+    cem <- max(0,summary(ccc)$coefficients[1,1] + summary(ccc)$coefficients[2,1]*yr)
                
     sim.nats <- rbind(sim.nats,nat)
     sim.yrs <- rbind(sim.yrs,yr)
@@ -76,17 +77,19 @@ cement <- read.csv(filepath, fileEncoding = 'UTF-8-BOM')
 
 cement <- cement[which(abs(cement$Real.Interest.Rate) < 50),]
 
-# We see that there are some extreme outliers in the above plot so we remove them -- anything above 99.5 percentile
+# We see that there are some extreme outliers in the above plot so we remove them -- anything above 99.5 percentile or below 0.5 percentile
 
-cutoff <- quantile(cement$Intensity, c(.995), na.rm = TRUE)
-cement <- cement[which(cement$Intensity <= cutoff),]
+upper <- quantile(cement$Intensity, c(.995), na.rm = TRUE)
+lower <- quantile(cement$Intensity, c(.005), na.rm = TRUE)
+cement <- cement[which(cement$Intensity <= upper & cement$Intensity >= lower),]
 cement <- cement[which(cement$Cement > 0 & cement$Intensity > 0),]
 high <- cement[which(cement$GDP.per.capita >= 30000),]
 
 # Repeat for simulated data
 
-cutoff <- quantile(sim.df$Intensity, c(.995), na.rm = TRUE)
-sim.df <- sim.df[which(sim.df$Intensity <= cutoff),]
+upper <- quantile(sim.df$Intensity, c(.995), na.rm = TRUE)
+lower <- quantile(sim.df$Intensity, c(.005), na.rm = TRUE)
+sim.df <- sim.df[which(sim.df$Intensity <= upper & sim.df$Intensity >= lower),]
 sim.df <- sim.df[which(sim.df$Cement > 0 & sim.df$Intensity > 0),]
 
 hi <- c()
