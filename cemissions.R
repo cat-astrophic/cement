@@ -160,70 +160,96 @@ cement <- cement[which(abs(cement$Real.Interest.Rate) < 50),]
 
 # Running autoregressive models
 
-ear1 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear1 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
            + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
 
-ear3 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear3 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading, data = cement)
 
-ear5 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear5 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading, data = cement)
 
-ear7 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear7 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II, data = cement)
 
-ear9 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
-           + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading, data = cement)
-
-ear11 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear9 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
             + Forest.Rents + Tariff.Rate + Lagged.R.D + KP, data = cement)
 
-ear13 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear11 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+           + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading, data = cement)
+
+ear13 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
             + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
-            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading
-            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
+            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading, data = cement)
 
-ear15 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear15 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
-            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II, data = cement)
 
-ear17 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear17 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading
-            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year), data = cement)
 
-ear19 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear19 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13, data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + factor(Year), data = cement)
 
-ear21 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear21 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
             + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
-            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading
-            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
+            + Kyoto.I.Rat.Phase.I*Emissions.Trading + Kyoto.I.Rat.Phase.II*Emissions.Trading + factor(Year), data = cement)
 
-ear23 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear23 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II
-            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + factor(Year), data = cement)
 
-ear25 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear25 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading
-            + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + factor(Year), data = cement)
 
-ear27 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+ear27 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + FYP8 + FYP9 + FYP10 + FYP12 + FYP13 + FYP13 + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading + factor(Year), data = cement)
+
+ear29 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Country), data = cement)
+
+ear31 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + factor(Country), data = cement)
+
+ear33 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + factor (Country), data = cement)
+
+ear35 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading + factor(Country), data = cement)
+
+ear37 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year) + factor(Country), data = cement)
+
+ear39 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + factor(Year) + factor(Country), data = cement)
+
+ear41 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + KP + factor(Year) + factor (Country), data = cement)
+
+ear43 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+            + Urban.Population + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + KP + KP*Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 # Calculating robust standard errors
 
@@ -269,28 +295,62 @@ rse25 <- sqrt(diag(cov1))
 cov1 <- vcovHC(ear27, type = 'HC1')
 rse27 <- sqrt(diag(cov1))
 
+cov1 <- vcovHC(ear29, type = 'HC1')
+rse29 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear31, type = 'HC1')
+rse31 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear33, type = 'HC1')
+rse33 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear35, type = 'HC1')
+rse35 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear37, type = 'HC1')
+rse37 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear39, type = 'HC1')
+rse39 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear41, type = 'HC1')
+rse41 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(ear43, type = 'HC1')
+rse43 <- sqrt(diag(cov1))
+
 # Viewing results
 
 stargazer(ear1, ear3, type = 'text', se = list(rse1, rse3)) # No KP effects
 stargazer(ear5, ear7, type = 'text', se = list(rse5, rse7)) # KP effects by phase
 stargazer(ear9, ear11, type = 'text', se = list(rse9, rse11)) # General KP effects
-stargazer(ear13, ear15, type = 'text', se = list(rse13, rse15)) # KP effects by phase with 5YPs
-stargazer(ear17, ear19, type = 'text', se = list(rse17, rse19)) # General KP effects with 5YPs
-stargazer(ear21, ear23, type = 'text', se = list(rse21, rse23)) # KP effects by phase with 5YPs with year FE
-stargazer(ear25, ear27, type = 'text', se = list(rse25, rse27)) # General KP effects with 5YPs with year FE
+stargazer(ear13, ear15, type = 'text', se = list(rse13, rse15)) # KP effects by phase
+stargazer(ear17, ear19, type = 'text', se = list(rse17, rse19)) # No KP effects with year FE
+stargazer(ear21, ear23, type = 'text', se = list(rse21, rse23)) # KP effects by phase with year FE
+stargazer(ear25, ear27, type = 'text', se = list(rse25, rse27)) # General KP effects with year FE
+stargazer(ear29, ear31, type = 'text', se = list(rse29, rse31)) # No KP effects with country FE
+stargazer(ear33, ear35, type = 'text', se = list(rse33, rse35)) # General KP effects with country FE
+stargazer(ear37, ear39, type = 'text', se = list(rse37, rse39)) # No KP effects with year and country FE
+stargazer(ear41, ear43, type = 'text', se = list(rse41, rse43)) # General KP effects with year and country FE
 
 # Writing results to file
 
-write.csv(stargazer(ear1, ear3, ear5, ear7, ar13, ar15, ar21, ar23, type = 'text',
+write.csv(stargazer(ear1, ear3, ear5, ear7, ear13, ear15, ear21, ear23, type = 'text',
                     se = list(rse1, rse3, rse5, rse7, rse13, rse15, rse21, rse23)),
           paste(directory, 'emissions_regression_results_phases.txt'), row.names = FALSE)
-write.csv(stargazer(ear1, ear3, ear5, ear7, ar13, ar15, ar21, ar23,
+write.csv(stargazer(ear1, ear3, ear5, ear7, ear13, ear15, ear21, ear23,
                     se = list(rse1, rse3, rse5, rse7, rse13, rse15, rse21, rse23)),
           paste(directory, 'emissions_regression_results_phases_tex.txt'), row.names = FALSE)
-write.csv(stargazer(ear1, ear3, ear9, ear11, ar19, ar21, ar25, ar27, type = 'text',
+write.csv(stargazer(ear1, ear3, ear9, ear11, ear17, ear19, ear25, ear27, type = 'text',
                     se = list(rse1, rse3, rse9, rse11, rse17, rse19, rse25, rse27)),
           paste(directory, 'emissions_regression_results_all.txt'), row.names = FALSE)
-write.csv(stargazer(ear1, ear3, ear9, ear11, ar19, ar21, ar25, ar27,
+write.csv(stargazer(ear1, ear3, ear9, ear11, ear17, ear19, ear25, ear27,
                     se = list(rse1, rse3, rse9, rse11, rse17, rse19, rse25, rse27)),
           paste(directory, 'emissions_regression_results_all_tex.txt'), row.names = FALSE)
+write.csv(stargazer(ear29, ear31, ear33, ear35, ear37, ear39, ear41, ear43, type = 'text',
+                    se = list(rse29, rse31, rse33, rse35, rse37, rse39, rse41, rse43)),
+          paste(directory, 'emissions_regression_results_all_robcheck.txt'), row.names = FALSE)
+write.csv(stargazer(ear29, ear31, ear33, ear35, ear37, ear39, ear41, ear43,
+                    se = list(rse29, rse31, rse33, rse35, rse37, rse39, rse41, rse43)),
+          paste(directory, 'emissions_regression_results_all_robcheck_tex.txt'), row.names = FALSE)
 
