@@ -32,59 +32,78 @@ plot(cement$Year,cement$Intensity)
 
 # Running Carbon intensity regressions for cement manufacturing
 
-i1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading, data = cement)
+i1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-i2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading, data = cement)
+i2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-i3 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading, data = cement)
+i3 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-i4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading + factor(Year), data = cement)
+i4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-i5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading + factor(Year), data = cement)
+i5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-i6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading + factor(Year), data = cement)
+i6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-ii1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading, data = cement)
+ii1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-ii2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading, data = cement)
+ii2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-ii3 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D*KP + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading, data = cement)
+ii3 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D*KP + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-ii4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading + factor(Year), data = cement)
+ii4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-ii5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading + factor(Year), data = cement)
+ii5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-ii6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Lagged.R.D*KP + Real.Interest.Rate + Renewable.Electricity.Output
-          + Emissions.Trading + factor(Year), data = cement)
+ii6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D*KP + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-iii1 <- lm(Intensity ~log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading, data = cement)
+iii1 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-iii2 <- lm(Intensity ~ log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading, data = cement)
+iii2 <- lm(Intensity ~ log(GDP.per.capita) + KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-iii3 <- lm(Intensity ~ log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading, data = cement)
+iii3 <- lm(Intensity ~ log(GDP.per.capita)*KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-iii4 <- lm(Intensity ~ log(GDP.per.capita) + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading + factor(Year), data = cement)
+iii4 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-iii5 <- lm(Intensity ~ log(GDP.per.capita) + KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading + factor(Year), data = cement)
+iii5 <- lm(Intensity ~ log(GDP.per.capita) + KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-iii6 <- lm(Intensity ~ log(GDP.per.capita)*KP + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output
-         + Emissions.Trading + factor(Year), data = cement)
+iii6 <- lm(Intensity ~ log(GDP.per.capita)*KP + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
+
 
 # Calculating robust standard errors
 
