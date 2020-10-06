@@ -260,7 +260,7 @@ ar17 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.pe
 
 ar19 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-           + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year), data = cement)
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + factor(Year), data = cement)
 
 ar21 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
