@@ -23,7 +23,6 @@ for (i in 1990:2016) {
   
 }
 
-
 c_sums1 <- c_sums*1000
 c_sums2 <- c_sums*1000
 all.df = data.frame(Year = c(yrs), a1 = c(c_sums1), a2 = c(c_sums2), C = c(c_sums))
@@ -413,4 +412,47 @@ write.csv(stargazer(ar29, ar31, ar33, ar35, ar37, ar39, ar41, ar43, type = 'text
 write.csv(stargazer(ar29, ar31, ar33, ar35, ar37, ar39, ar41, ar43,
                     se = list(rse29, rse31, rse33, rse35, rse37, rse39, rse41, rse43)),
           paste(directory, 'cement_regression_results_all_robcheck_tex.txt'), row.names = FALSE)
+
+# Repeating for difference-in-differences models
+
+cement$Post2004 <- as.numeric(cement$Year > 2004)
+cement$Post2005 <- as.numeric(cement$Year > 2005)
+cement$Post2006 <- as.numeric(cement$Year > 2006)
+cement$Post2007 <- as.numeric(cement$Year > 2007)
+
+rar1 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2004 + factor(Year), data = cement)
+
+rar2 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2005 + factor(Year), data = cement)
+
+rar3 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2006 + factor(Year), data = cement)
+
+rar4 <- lm(log(Cement) ~ log(Lagged.Cement) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+           + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2007 + factor(Year), data = cement)
+
+cov1 <- vcovHC(rar1, type = 'HC1')
+r1 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(rar2, type = 'HC1')
+r2 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(rar3, type = 'HC1')
+r3 <- sqrt(diag(cov1))
+
+cov1 <- vcovHC(rar4, type = 'HC1')
+r4 <- sqrt(diag(cov1))
+
+stargazer(rar1, rar2, rar3, rar4, type = 'text', se = list(r1,r2,r3,r4))
+
+write.csv(stargazer(rar1, rar2, rar3, rar4, type = 'text', se = list(r1, r2, r3, r4,)),
+          paste(directory, 'cement_regression_results_DID.txt'), row.names = FALSE)
+
+write.csv(stargazer(rar1, rar2, rar3, rar4, se = list(r1, r2, r3, r4)),
+          paste(directory, 'cement_regression_results_DID_tex.txt'), row.names = FALSE)
 
