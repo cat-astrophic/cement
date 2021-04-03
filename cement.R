@@ -450,7 +450,7 @@ r4 <- sqrt(diag(cov1))
 
 stargazer(rar1, rar2, rar3, rar4, type = 'text', se = list(r1,r2,r3,r4))
 
-write.csv(stargazer(rar1, rar2, rar3, rar4, type = 'text', se = list(r1, r2, r3, r4,)),
+write.csv(stargazer(rar1, rar2, rar3, rar4, type = 'text', se = list(r1, r2, r3, r4)),
           paste(directory, 'cement_regression_results_DID.txt'), row.names = FALSE)
 
 write.csv(stargazer(rar1, rar2, rar3, rar4, se = list(r1, r2, r3, r4)),
