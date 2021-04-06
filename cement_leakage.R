@@ -172,7 +172,7 @@ write.csv(stargazer(lmod1, lmod2, lmod11, lmod12, type = 'text',
           paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
 
 write.csv(stargazer(lmod1, lmod2, lmod11, lmod12, se = list(rse1, rse2, rse11, rse12)),
-          paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
+          paste(directory, 'leakage_footprint_regression_results_tex.txt'), row.names = FALSE)
 
 # Running regressions for net imports
 
@@ -230,7 +230,7 @@ write.csv(stargazer(l2mod1, l2mod2, l2mod11, l2mod12, type = 'text',
           paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
 
 write.csv(stargazer(l2mod1, l2mod2, l2mod11, l2mod12, se = list(lrse1, lrse2, lrse11, lrse12)),
-          paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
+          paste(directory, 'leakage_net_imports_regression_results_tex.txt'), row.names = FALSE)
 
 # Creating plots
 
