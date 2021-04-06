@@ -1,5 +1,7 @@
 # This script performs the data analysis for a paper on the effect of the Kyoto Protocol on cement manufacturing (CARBON LEAKGE)
 
+# NOTE: For the IV regressions, the instrument was ICC membership via 
+
 # Loading libraries
 
 library(sandwich)
@@ -94,7 +96,7 @@ cement$Footprint <- (-1*cement$NX.Cement * cement$Intensity) + cement$Cement.Emi
 
 # Calculating total cement consumption
 
-cement$Consumption <- cement$Cement + cement$NX.Cement/1000
+cement$Consumption <- cement$Cement + cement$NX.Cement
 
 # Subset to remove extreme emissions intensities
 
@@ -169,6 +171,9 @@ write.csv(stargazer(lmod1, lmod2, lmod11, lmod12, type = 'text',
                     se = list(rse1, rse2, rse11, rse12)),
           paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
 
+write.csv(stargazer(lmod1, lmod2, lmod11, lmod12, se = list(rse1, rse2, rse11, rse12)),
+          paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
+
 # Running regressions for net imports
 
 l2mod1 <- lm(Net.Imports ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
@@ -222,6 +227,9 @@ stargazer(l2mod1, l2mod2, l2mod3, l2mod11, l2mod12, l2mod13, type = 'text',
 
 write.csv(stargazer(l2mod1, l2mod2, l2mod11, l2mod12, type = 'text',
                     se = list(lrse1, lrse2, lrse11, lrse12)),
+          paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
+
+write.csv(stargazer(l2mod1, l2mod2, l2mod11, l2mod12, se = list(lrse1, lrse2, lrse11, lrse12)),
           paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
 
 # Creating plots
