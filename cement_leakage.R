@@ -8,6 +8,7 @@ library(sandwich)
 library(stargazer)
 library(ggplot2)
 library(AER)
+library(plotly)
 
 # Reading in the panel data
 
@@ -312,4 +313,80 @@ W.high <- ssc.high * sigma
 
 W.low.noCL <- ssc.low * emissions.decrease
 W.high.noCL <- ssc.high * emissions.decrease
+
+# Creating some choropleths for the paper with plotly
+
+cement <- read.csv(filepath, fileEncoding = 'UTF-8-BOM')
+df <- read.csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv')
+names(df) <- c('Country', 'Junk', 'Code')
+
+list1 <- c('Brunei Darussalam', 'Congo, Dem. Rep.', 'Hong Kong SAR, China', 'North Macedonia', 'Slovak Republic')
+list2 <- c('Brunei', 'Congo, Democratic Republic of the', 'Hong Kong', 'Macedonia', 'Slovakia')
+
+for (i in 1:5) {
+  
+  idx <- as.numeric(rownames(df[match(list2[i],df$Country),]))
+  df$Country[idx] <- list1[i]
+  
+}
+
+mapdat96 <- subset(cement, Year == 1996)
+mapdat96 <- merge(mapdat96, df, by = 'Country')
+mapdat96$Cement <- log(mapdat96$Cement)
+
+mapdat16 <- subset(cement, Year == 2016)
+mapdat16 <- merge(mapdat16, df, by = 'Country')
+mapdat16$Cement <- log(mapdat16$Cement)
+
+tmapdat96 <- subset(tradedata, Year == 1996)
+tmapdat96 <- merge(tmapdat96, df, by = 'Country')
+tmapdat96$Net.Imports <- -1*log(abs(tmapdat96$Trade.Value.Delta)) * (abs(tmapdat96$Trade.Value.Delta) / tmapdat96$Trade.Value.Delta)
+
+tmapdat16 <- subset(tradedata, Year == 2016)
+tmapdat16 <- merge(tmapdat16, df, by = 'Country')
+tmapdat16$Net.Imports <- -1*log(abs(tmapdat16$Trade.Value.Delta)) * (abs(tmapdat16$Trade.Value.Delta) / tmapdat16$Trade.Value.Delta)
+
+# Specify map projection/options
+
+l <- list(color = toRGB('grey'), width = 0.5)
+
+geog <- list(showframe = FALSE,
+             showcoastlines = FALSE,
+             projection = list(type = 'Mercator'))
+
+# Create the choropleth maps for cement production
+
+init_cmap <- plot_geo(mapdat96) %>%
+  add_trace(z = ~Cement, color = ~Cement, colors = 'Blues',
+            text = ~Country, locations = ~Code, marker = list(line = l)) %>%
+  #colorbar(title = '', limits = c(0,max(mapdat96$Cement))) %>%
+  hide_colorbar() %>%
+  layout(title = 'Initial (1996) Cement Production',
+         geo = geog)
+
+fin_cmap <- plot_geo(mapdat16) %>%
+  add_trace(z = ~Cement, color = ~Cement, colors = 'Blues',
+            text = ~Country, locations = ~Code, marker = list(line = l)) %>%
+  #colorbar(title = '', limits = c(0,max(mapdat16$Cement))) %>%
+  hide_colorbar() %>%
+  layout(title = 'Final (2016) Cement Production',
+         geo = geog)
+
+# Create the choropleth maps for net cement imports
+
+init_impmap <- plot_geo(tmapdat96) %>%
+  add_trace(z = ~Net.Imports, color = ~Net.Imports, colors = c('Blue', 'Red'),
+            text = ~Country, locations = ~Code, marker = list(line = l)) %>%
+  colorbar(title = '', limits = c(min(tmapdat96$Net.Imports)),max(tmapdat96$Net.Imports)) %>%
+  #hide_colorbar() %>%
+  layout(title = 'Initial (1996) Net Cement Imports',
+         geo = geog)
+
+fin_impmap <- plot_geo(tmapdat16) %>%
+  add_trace(z = ~Net.Imports, color = ~Net.Imports, colors = c('Blue', 'Red'),
+            text = ~Country, locations = ~Code, marker = list(line = l)) %>%
+  colorbar(title = '', limits = c(min(tmapdat16$Net.Imports)),max(tmapdat16$Net.Imports)) %>%
+  #hide_colorbar() %>%
+  layout(title = 'Final (2016) Net Cement Imports',
+         geo = geog)
 
