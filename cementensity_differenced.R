@@ -5,6 +5,7 @@
 library(sandwich)
 library(stargazer)
 library(ggplot2)
+library(lmtest)
 
 # Reading in the panel data
 
@@ -27,6 +28,13 @@ cement <- cement[which(cement$Differenced <= upper.cutoff & cement$Differenced >
 hist(cement$Differenced)
 plot(cement$Year,cement$Differenced)
 
+# Post variables
+
+cement$Post2004 <- as.numeric(cement$Year > 2004)
+cement$Post2005 <- as.numeric(cement$Year > 2005)
+cement$Post2006 <- as.numeric(cement$Year > 2006)
+cement$Post2007 <- as.numeric(cement$Year > 2007)
+
 # Running Carbon intensity regressions for cement manufacturing
 
 i1 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
@@ -35,43 +43,39 @@ i2 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading
 
 i3 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
 
-i4 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
+i4 <- lm(Differenced ~ log(GDP.per.capita) + Kyoto.Rat*Post2007 + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
+
+i5 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
-i5 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
+i6 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
-i6 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
+i7 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
+         + factor(Year), data = cement)
+
+i8 <- lm(Differenced ~ log(GDP.per.capita) + Kyoto.Rat*Post2007 + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
          + factor(Year), data = cement)
 
 # Calculating robust standard errors
 
-cov1 <- vcovHC(i1, type = 'HC1')
-rsei1 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i2, type = 'HC1')
-rsei2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i3, type = 'HC1')
-rsei3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i4, type = 'HC1')
-rsei4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i5, type = 'HC1')
-rsei5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i6, type = 'HC1')
-rsei6 <- sqrt(diag(cov1))
+i1x <- coeftest(i1, vcov = vcovCL, cluster = ~Country)
+i2x <- coeftest(i2, vcov = vcovCL, cluster = ~Country)
+i3x <- coeftest(i3, vcov = vcovCL, cluster = ~Country)
+i4x <- coeftest(i4, vcov = vcovCL, cluster = ~Country)
+i5x <- coeftest(i5, vcov = vcovCL, cluster = ~Country)
+i6x <- coeftest(i6, vcov = vcovCL, cluster = ~Country)
+i7x <- coeftest(i7, vcov = vcovCL, cluster = ~Country)
+i8x <- coeftest(i8, vcov = vcovCL, cluster = ~Country)
 
 # Viewing results
 
-stargazer(i1, i2, i3, i4, i5, i6, type = 'text', se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6))
+stargazer(i1x, i2x, i3x, i4x, i5x, i6x, i7x, i8x, type = 'text')
 
 # Writing results to file
 
-write.csv(stargazer(i1, i2, i3, i4, i5, i6, type = 'text', se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6)),
+write.csv(stargazer(i1x, i2x, i3x, i4x, i5x, i6x, i7x, i8x, type = 'text'),
           paste(directory, 'intensity_differenced_regression_results.txt'), row.names = FALSE)
-write.csv(stargazer(i1, i2, i3, i4, i5, i6, se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6)),
+write.csv(stargazer(i1x, i2x, i3x, i4x, i5x, i6x, i7x, i8x),
           paste(directory, 'intensity_differenced_regression_results_tex.txt'), row.names = FALSE)
 
