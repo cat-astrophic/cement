@@ -5,6 +5,7 @@
 library(sandwich)
 library(stargazer)
 library(ggplot2)
+library(lmtest)
 
 # Reading in the panel data
 
@@ -56,115 +57,50 @@ i6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase.I 
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-ii1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
-
-ii2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
-
-ii3 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D*Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
-
-ii4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
-
-ii5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
-
-ii6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D*Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
-
-iii1 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+ii1 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-iii2 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+ii2 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-iii3 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+ii3 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading, data = cement)
 
-iii4 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+ii4 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-iii5 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+ii5 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
-iii6 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+ii6 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year), data = cement)
 
 # Calculating robust standard errors
 
-cov1 <- vcovHC(i1, type = 'HC1')
-rsei1 <- sqrt(diag(cov1))
+i1x <- coeftest(i1, vcov = vcovCL, cluster = ~Country)
+i2x <- coeftest(i2, vcov = vcovCL, cluster = ~Country)
+i3x <- coeftest(i3, vcov = vcovCL, cluster = ~Country)
+i4x <- coeftest(i4, vcov = vcovCL, cluster = ~Country)
+i5x <- coeftest(i5, vcov = vcovCL, cluster = ~Country)
+i6x <- coeftest(i6, vcov = vcovCL, cluster = ~Country)
 
-cov1 <- vcovHC(i2, type = 'HC1')
-rsei2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i3, type = 'HC1')
-rsei3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i4, type = 'HC1')
-rsei4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i5, type = 'HC1')
-rsei5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(i6, type = 'HC1')
-rsei6 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(ii1, type = 'HC1')
-rseii1 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(ii2, type = 'HC1')
-rseii2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(ii3, type = 'HC1')
-rseii3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(ii4, type = 'HC1')
-rseii4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(ii5, type = 'HC1')
-rseii5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(ii6, type = 'HC1')
-rseii6 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(iii1, type = 'HC1')
-rseiii1 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(iii2, type = 'HC1')
-rseiii2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(iii3, type = 'HC1')
-rseiii3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(iii4, type = 'HC1')
-rseiii4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(iii5, type = 'HC1')
-rseiii5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(iii6, type = 'HC1')
-rseiii6 <- sqrt(diag(cov1))
+ii1x <- coeftest(ii1, vcov = vcovCL, cluster = ~Country)
+ii2x <- coeftest(ii2, vcov = vcovCL, cluster = ~Country)
+ii3x <- coeftest(ii3, vcov = vcovCL, cluster = ~Country)
+ii4x <- coeftest(ii4, vcov = vcovCL, cluster = ~Country)
+ii5x <- coeftest(ii5, vcov = vcovCL, cluster = ~Country)
+ii6x <- coeftest(ii6, vcov = vcovCL, cluster = ~Country)
 
 # Viewing results
 
-stargazer(i1, i2, i3, i4, i5, i6, type = 'text', se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6))
-stargazer(ii1, ii2, ii3, ii4, ii5, ii6, type = 'text', se = list(rseii1, rseii2, rseii3, rseii4, rseii5, rseii6))
-stargazer(iii1, iii2, iii3, iii4, iii5, iii6, type = 'text', se = list(rseiii1, rseiii2, rseiii3, rseiii4, rseiii5, rseiii6))
+stargazer(i1, i2, i3, i4, i5, i6, type = 'text')
+stargazer(ii1, ii2, ii3, ii4, ii5, ii6, type = 'text')
 
 # Running additional robustness checks by adding country level fixed effects to the original models
 
@@ -192,133 +128,70 @@ j6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase.I 
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-jj1 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Country), data = cement)
-
-jj2 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Country), data = cement)
-
-jj3 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D*Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Country), data = cement)
-
-jj4 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
-
-jj5 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
-
-jj6 <- lm(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-          + Urban.Population + Lagged.R.D*Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
-
-jjj1 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+jj1 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Country), data = cement)
 
-jjj2 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+jj2 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Country), data = cement)
 
-jjj3 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+jj3 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Country), data = cement)
 
-jjj4 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+jj4 <- lm(Intensity ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-jjj5 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+jj5 <- lm(Intensity ~ log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-jjj6 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+jj6 <- lm(Intensity ~ log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 # Calculating robust standard errors
 
-cov1 <- vcovHC(j1, type = 'HC1')
-rsej1 <- sqrt(diag(cov1))
+j1x <- coeftest(j1, vcov = vcovCL, cluster = ~Country)
+j2x <- coeftest(j2, vcov = vcovCL, cluster = ~Country)
+j3x <- coeftest(j3, vcov = vcovCL, cluster = ~Country)
+j4x <- coeftest(j4, vcov = vcovCL, cluster = ~Country)
+j5x <- coeftest(j5, vcov = vcovCL, cluster = ~Country)
+j6x <- coeftest(j6, vcov = vcovCL, cluster = ~Country)
 
-cov1 <- vcovHC(j2, type = 'HC1')
-rsej2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(j3, type = 'HC1')
-rsej3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(j4, type = 'HC1')
-rsej4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(j5, type = 'HC1')
-rsej5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(j6, type = 'HC1')
-rsej6 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jj1, type = 'HC1')
-rsejj1 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jj2, type = 'HC1')
-rsejj2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jj3, type = 'HC1')
-rsejj3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jj4, type = 'HC1')
-rsejj4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jj5, type = 'HC1')
-rsejj5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jj6, type = 'HC1')
-rsejj6 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jjj1, type = 'HC1')
-rsejjj1 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jjj2, type = 'HC1')
-rsejjj2 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jjj3, type = 'HC1')
-rsejjj3 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jjj4, type = 'HC1')
-rsejjj4 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jjj5, type = 'HC1')
-rsejjj5 <- sqrt(diag(cov1))
-
-cov1 <- vcovHC(jjj6, type = 'HC1')
-rsejjj6 <- sqrt(diag(cov1))
+jj1x <- coeftest(jj1, vcov = vcovCL, cluster = ~Country)
+jj2x <- coeftest(jj2, vcov = vcovCL, cluster = ~Country)
+jj3x <- coeftest(jj3, vcov = vcovCL, cluster = ~Country)
+jj4x <- coeftest(jj4, vcov = vcovCL, cluster = ~Country)
+jj5x <- coeftest(jj5, vcov = vcovCL, cluster = ~Country)
+jj6x <- coeftest(jj6, vcov = vcovCL, cluster = ~Country)
 
 # Viewing results
 
-stargazer(j1, j2, j3, j4, j5, j6, type = 'text', se = list(rsej1, rsej2, rsej3, rsej4, rsej5, rsej6))
-stargazer(jj1, jj2, jj3, jj4, jj5, jj6, type = 'text', se = list(rsejj1, rsejj2, rsejj3, rsejj4, rsejj5, rsejj6))
-stargazer(jjj1, jjj2, jjj3, jjj4, jjj5, jjj6, type = 'text', se = list(rsejjj1, rsejjj2, rsejjj3, rsejjj4, rsejjj5, rsejjj6))
+stargazer(j1, j2, j3, j4, j5, j6, type = 'text')
+stargazer(jj1, jj2, jj3, jj4, jj5, jj6, type = 'text')
 
 # Writing main results to file
 
-write.csv(stargazer(i1, i2, i3, i4, i5, i6, type = 'text',
-                    se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6)),
+write.csv(stargazer(i1x, i2x, i3x, i4x, i5x, i6x, type = 'text'),
           paste(directory, 'intensity_regression_results.txt'), row.names = FALSE)
-write.csv(stargazer(i1, i2, i3, i4, i5, i6, se = list(rsei1, rsei2, rsei3, rsei4, rsei5, rsei6)),
+write.csv(stargazer(i1x, i2x, i3x, i4x, i5x, i6x),
           paste(directory, 'intensity_regression_results_tex.txt'), row.names = FALSE)
-write.csv(stargazer(ii1, ii2, ii3, ii4, ii5, ii6, type = 'text',
-                    se = list(rseii1, rseii2, rseii3, rseii4, rseii5, rseii6)),
+write.csv(stargazer(ii1x, ii2x, ii3x, ii4x, ii5x, ii6x, type = 'text'),
           paste(directory, 'intensity_regression_results_2.txt'), row.names = FALSE)
-write.csv(stargazer(ii1, ii2, ii3, ii4, ii5, ii6, se = list(rseii1, rseii2, rseii3, rseii4, rseii5, rseii6)),
+write.csv(stargazer(ii1x, ii2x, ii3x, ii4x, ii5x, ii6x),
           paste(directory, 'intensity_regression_results_2_tex.txt'), row.names = FALSE)
-write.csv(stargazer(iii1, iii2, iii3, iii4, iii5, iii6, type = 'text',
-                    se = list(rseiii1, rseiii2, rseiii3, rseiii4, rseiii5, rseiii6)),
+
+write.csv(stargazer(j1x, j2x, j3x, j4x, j5x, j6x, type = 'text'),
           paste(directory, 'intensity_regression_results_3.txt'), row.names = FALSE)
-write.csv(stargazer(iii1, iii2, iii3, iii4, iii5, iii6, se = list(rseiii1, rseiii2, rseiii3, rseiii4, rseiii5, rseiii6)),
-          paste(directory, 'intensity_regression_results_tex_3_tex.txt'), row.names = FALSE)
+write.csv(stargazer(j1x, j2x, j3x, j4x, j5x, j6x),
+          paste(directory, 'intensity_regression_results_3_tex.txt'), row.names = FALSE)
+write.csv(stargazer(jj1x, jj2x, jj3x, jj4x, jj5x, jj6x, type = 'text'),
+          paste(directory, 'intensity_regression_results_4.txt'), row.names = FALSE)
+write.csv(stargazer(jj1x, jj2x, jj3x, jj4x, jj5x, jj6x),
+          paste(directory, 'intensity_regression_results_4_tex.txt'), row.names = FALSE)
 
 # Creating figures for the paper
 
