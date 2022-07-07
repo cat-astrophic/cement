@@ -145,92 +145,70 @@ lmod13 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(
 
 # Computing heteroskedasticity robust standard errors
 
-c1 <- vcovHC(lmod1, type = 'HC1')
-rse1 <- sqrt(diag(c1))
+lmod1x <- coeftest(lmod1, vcov = vcovCL, cluster = ~Country.x)
+lmod2x <- coeftest(lmod2, vcov = vcovCL, cluster = ~Country.x)
+lmod3x <- coeftest(lmod3, vcov = vcovCL, cluster = ~Country.x)
 
-c2 <- vcovHC(lmod2, type = 'HC1')
-rse2 <- sqrt(diag(c2))
-
-c3 <- vcovHC(lmod3, type = 'HC1')
-rse3 <- sqrt(diag(c3))
-
-c11 <- vcovHC(lmod11, type = 'HC1')
-rse11 <- sqrt(diag(c11))
-
-c12 <- vcovHC(lmod12, type = 'HC1')
-rse12 <- sqrt(diag(c12))
-
-c13 <- vcovHC(lmod13, type = 'HC1')
-rse13 <- sqrt(diag(c13))
+lmod11x <- coeftest(lmod11, vcov = vcovCL, cluster = ~Country.x)
+lmod12x <- coeftest(lmod12, vcov = vcovCL, cluster = ~Country.x)
+lmod13x <- coeftest(lmod13, vcov = vcovCL, cluster = ~Country.x)
 
 # Viewing the results and writing them to file
 
-stargazer(lmod1, lmod2, lmod3, lmod11, lmod12, lmod13, type = 'text',
-          se = list(rse1, rse2, rse3, rse11, rse12, rse13), omit.stat = c('f'))
+stargazer(lmod1x, lmod2x, lmod3x, lmod11x, lmod12x, lmod13x, type = 'text')
 
-write.csv(stargazer(lmod1, lmod2, lmod11, lmod12, type = 'text',
-                    se = list(rse1, rse2, rse11, rse12)),
+write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod11x, lmod12x, lmod13x, type = 'text'),
           paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
 
-write.csv(stargazer(lmod1, lmod2, lmod11, lmod12, se = list(rse1, rse2, rse11, rse12)),
+write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod11x, lmod12x, lmod13x),
           paste(directory, 'leakage_footprint_regression_results_tex.txt'), row.names = FALSE)
 
 # Running regressions for net imports
 
-l2mod1 <- lm(Net.Imports ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+cement$Net.Imports2 <- cement$Net.Imports / 1000
+
+l2mod1 <- lm(Net.Imports2 ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
             + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
 
-l2mod2 <- lm(Net.Imports ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod2 <- lm(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
             + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
 
-l2mod3 <- ivreg(Net.Imports ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod3 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                + Forest.Rents + Tariff.Rate + Lagged.R.D | . - Kyoto.Rat + ICC, data = cement)
 
-l2mod11 <- lm(Net.Imports ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod11 <- lm(Net.Imports2 ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
              + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
              + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x), data = cement)
 
-l2mod12 <- lm(Net.Imports ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod12 <- lm(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
              + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
              + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x), data = cement)
 
-l2mod13 <- ivreg(Net.Imports ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod13 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
                 + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                 + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) | . - Kyoto.Rat + ICC, data = cement)
 
 # Computing heteroskedasticity robust standard errors
 
-lc1 <- vcovHC(l2mod1, type = 'HC1')
-lrse1 <- sqrt(diag(lc1))
+l2mod1x <- coeftest(l2mod1, vcov = vcovCL, cluster = ~Country.x)
+l2mod2x <- coeftest(l2mod2, vcov = vcovCL, cluster = ~Country.x)
+l2mod3x <- coeftest(l2mod3, vcov = vcovCL, cluster = ~Country.x)
 
-lc2 <- vcovHC(l2mod2, type = 'HC1')
-lrse2 <- sqrt(diag(lc2))
-
-lc3 <- vcovHC(l2mod3, type = 'HC1')
-lrse3 <- sqrt(diag(lc3))
-
-lc11 <- vcovHC(l2mod11, type = 'HC1')
-lrse11 <- sqrt(diag(lc11))
-
-lc12 <- vcovHC(l2mod12, type = 'HC1')
-lrse12 <- sqrt(diag(lc12))
-
-lc13 <- vcovHC(l2mod13, type = 'HC1')
-lrse13 <- sqrt(diag(lc13))
+l2mod11x <- coeftest(l2mod11, vcov = vcovCL, cluster = ~Country.x)
+l2mod12x <- coeftest(l2mod12, vcov = vcovCL, cluster = ~Country.x)
+l2mod13x <- coeftest(l2mod13, vcov = vcovCL, cluster = ~Country.x)
 
 # Viewing the results and writing them to file
 
-stargazer(l2mod1, l2mod2, l2mod3, l2mod11, l2mod12, l2mod13, type = 'text',
-          se = list(lrse1, lrse2, lrse3, lrse11, lrse12, lrse13), omit.stat = c('f'))
+stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod11x, l2mod12x, l2mod13x, type = 'text')
 
-write.csv(stargazer(l2mod1, l2mod2, l2mod11, l2mod12, type = 'text',
-                    se = list(lrse1, lrse2, lrse11, lrse12)),
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod11x, l2mod12x, l2mod13x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
 
-write.csv(stargazer(l2mod1, l2mod2, l2mod11, l2mod12, se = list(lrse1, lrse2, lrse11, lrse12)),
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod11x, l2mod12x, l2mod13x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results_tex.txt'), row.names = FALSE)
 
 # Creating plots
