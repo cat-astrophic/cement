@@ -60,18 +60,17 @@ cement <- merge.data.frame(cement, tradedata, by.x = 'concat', by.y = 'concat')
 
 # First set for general KP with variation in the initial year
 
-cement$post2004 <- as.numeric(cement$Year.x > 2004)
 cement$post2005 <- as.numeric(cement$Year.x > 2005)
 cement$post2006 <- as.numeric(cement$Year.x > 2006)
 cement$post2007 <- as.numeric(cement$Year.x > 2007)
+cement$post2008 <- as.numeric(cement$Year.x > 2008)
 
 # Phase I indicator
 
-cement$post.I <- as.numeric(cement$Year.x > 2007)
-
+cement$post.I <- as.numeric(cement$Year.x > 2008)
 # Phase II indicator
 
-cement$post.II <- as.numeric(cement$Year.x > 2011)
+cement$post.II <- as.numeric(cement$Year.x > 2012)
 
 # Creating the price data
 
@@ -119,96 +118,75 @@ cement$Ln.Cemissions <- log(cement$Cement.Emissions)
 
 # Running regressions for footprint
 
-lmod1 <- lm(Ln.Footprint ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
+lmod1 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2005 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-lmod2 <- lm(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
+lmod2 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2006 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
 lmod3 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-               + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-               + Forest.Rents + Tariff.Rate + Lagged.R.D | . - Kyoto.Rat + ICC, data = cement)
-
-lmod11 <- lm(Ln.Footprint ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-             + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x), data = cement)
-
-lmod12 <- lm(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-             + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x), data = cement)
-
-lmod13 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
                 + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) | . - Kyoto.Rat + ICC, data = cement)
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
+
+lmod4 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2008 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
 # Computing heteroskedasticity robust standard errors
 
 lmod1x <- coeftest(lmod1, vcov = vcovCL, cluster = ~Country.x)
 lmod2x <- coeftest(lmod2, vcov = vcovCL, cluster = ~Country.x)
 lmod3x <- coeftest(lmod3, vcov = vcovCL, cluster = ~Country.x)
-
-lmod11x <- coeftest(lmod11, vcov = vcovCL, cluster = ~Country.x)
-lmod12x <- coeftest(lmod12, vcov = vcovCL, cluster = ~Country.x)
-lmod13x <- coeftest(lmod13, vcov = vcovCL, cluster = ~Country.x)
+lmod4x <- coeftest(lmod4, vcov = vcovCL, cluster = ~Country.x)
 
 # Viewing the results and writing them to file
 
-stargazer(lmod1x, lmod2x, lmod3x, lmod11x, lmod12x, lmod13x, type = 'text')
+stargazer(lmod1x, lmod2x, lmod3x, lmod4x, type = 'text')
 
-write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod11x, lmod12x, lmod13x, type = 'text'),
+write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod4x, type = 'text'),
           paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
 
-write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod11x, lmod12x, lmod13x),
+write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod4x),
           paste(directory, 'leakage_footprint_regression_results_tex.txt'), row.names = FALSE)
 
 # Running regressions for net imports
 
 cement$Net.Imports2 <- cement$Net.Imports / 1000
 
-l2mod1 <- lm(Net.Imports2 ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
+l2mod1 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2005 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+               + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+               + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-l2mod2 <- lm(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D, data = cement)
+l2mod2 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2006 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+               + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+               + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
 l2mod3 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-               + Forest.Rents + Tariff.Rate + Lagged.R.D | . - Kyoto.Rat + ICC, data = cement)
+               + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-l2mod11 <- lm(Net.Imports2 ~ log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-             + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x), data = cement)
-
-l2mod12 <- lm(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-             + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x), data = cement)
-
-l2mod13 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
-                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) | . - Kyoto.Rat + ICC, data = cement)
+l2mod4 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2008 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+               + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+               + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
 # Computing heteroskedasticity robust standard errors
 
 l2mod1x <- coeftest(l2mod1, vcov = vcovCL, cluster = ~Country.x)
 l2mod2x <- coeftest(l2mod2, vcov = vcovCL, cluster = ~Country.x)
 l2mod3x <- coeftest(l2mod3, vcov = vcovCL, cluster = ~Country.x)
+l2mod4x <- coeftest(l2mod4, vcov = vcovCL, cluster = ~Country.x)
 
-l2mod11x <- coeftest(l2mod11, vcov = vcovCL, cluster = ~Country.x)
-l2mod12x <- coeftest(l2mod12, vcov = vcovCL, cluster = ~Country.x)
-l2mod13x <- coeftest(l2mod13, vcov = vcovCL, cluster = ~Country.x)
 
 # Viewing the results and writing them to file
 
-stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod11x, l2mod12x, l2mod13x, type = 'text')
+stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text')
 
-write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod11x, l2mod12x, l2mod13x, type = 'text'),
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
 
-write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod11x, l2mod12x, l2mod13x, type = 'text'),
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results_tex.txt'), row.names = FALSE)
 
 # Creating plots
@@ -251,13 +229,13 @@ dev.off()
 
 # Computing the net effects of the carbon leakage
 
-# Coefficients for increase in net cement imports due to KP (with a conversion to tons of cement)
+# Coefficients for increase in net cement imports due to KP
 
-mu <- 1043 * 1000
+mu <- 0.910 * 1000
 
 # Coefficient for reduction in cement derived emissions due to KP
 
-eta <- .10
+eta <- .05
 
 # Mean value of cement derived emissions post KP for KP nations
 
@@ -284,13 +262,23 @@ ssc.high <- 200
 
 # Computing the potential gains due to the KP
 
-W.low <- ssc.low * sigma
-W.high <- ssc.high * sigma
+# Mean annual national values for KP nations
+
+W.low.1 <- ssc.low * sigma
+W.high.1 <- ssc.high * sigma
+
+# Extending this over time
+
+W.low <- W.low.1 * 39 * 13
+W.high <- W.high.1 * 39 * 13
 
 # Repeating if carbon leakage is ignored
 
-W.low.noCL <- ssc.low * emissions.decrease
-W.high.noCL <- ssc.high * emissions.decrease
+W.low.noCL.1 <- ssc.low * emissions.decrease
+W.high.noCL.1 <- ssc.high * emissions.decrease
+
+W.low.noCL <- W.low.noCL.1 * 39 * 13
+W.high.noCL <- W.high.noCL.1 * 39 * 13
 
 # Creating some choropleths for the paper with plotly
 
