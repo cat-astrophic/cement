@@ -185,7 +185,7 @@ stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text', omit = c('Year.x', 
 write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
 
-write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text'),
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x),
           paste(directory, 'leakage_net_imports_regression_results_tex.txt'), row.names = FALSE)
 
 # Joint results output
