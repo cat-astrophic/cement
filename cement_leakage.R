@@ -143,7 +143,7 @@ lmod4x <- coeftest(lmod4, vcov = vcovCL, cluster = ~Country.x)
 
 # Viewing the results and writing them to file
 
-stargazer(lmod1x, lmod2x, lmod3x, lmod4x, type = 'text')
+stargazer(lmod1x, lmod2x, lmod3x, lmod4x, type = 'text', omit = c('Year.x', 'Country.x'))
 
 write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod4x, type = 'text'),
           paste(directory, 'leakage_footprint_regression_results.txt'), row.names = FALSE)
@@ -178,16 +178,23 @@ l2mod2x <- coeftest(l2mod2, vcov = vcovCL, cluster = ~Country.x)
 l2mod3x <- coeftest(l2mod3, vcov = vcovCL, cluster = ~Country.x)
 l2mod4x <- coeftest(l2mod4, vcov = vcovCL, cluster = ~Country.x)
 
-
 # Viewing the results and writing them to file
 
-stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text')
+stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text', omit = c('Year.x', 'Country.x'))
 
 write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results.txt'), row.names = FALSE)
 
 write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, type = 'text'),
           paste(directory, 'leakage_net_imports_regression_results_tex.txt'), row.names = FALSE)
+
+# Joint results output
+
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, lmod1x, lmod2x, lmod3x, lmod4x, type = 'text'),
+          paste(directory, 'leakage_all_regression_results.txt'), row.names = FALSE)
+
+write.csv(stargazer(l2mod1x, l2mod2x, l2mod3x, l2mod4x, lmod1x, lmod2x, lmod3x, lmod4x),
+          paste(directory, 'leakage_all_regression_results_tex.txt'), row.names = FALSE)
 
 # Creating plots
 
