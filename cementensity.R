@@ -45,17 +45,9 @@ j3 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-j4 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+j4 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.Rat + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Year) + factor(Country), data = cement)
-
-j5 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Year) + factor(Country), data = cement)
-
-j6 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
-         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Year) + factor(Country), data = cement)
+         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 # Calculating robust standard errors
 
@@ -63,18 +55,16 @@ j1x <- coeftest(j1, vcov = vcovCL, cluster = ~Kyoto.I.Rat.Phase.I)
 j2x <- coeftest(j2, vcov = vcovCL, cluster = ~Kyoto.I.Rat.Phase.I)
 j3x <- coeftest(j3, vcov = vcovCL, cluster = ~Kyoto.I.Rat.Phase.I)
 j4x <- coeftest(j4, vcov = vcovCL, cluster = ~Kyoto.I.Rat.Phase.I)
-j5x <- coeftest(j5, vcov = vcovCL, cluster = ~Kyoto.I.Rat.Phase.I)
-j6x <- coeftest(j6, vcov = vcovCL, cluster = ~Kyoto.I.Rat.Phase.I)
 
 # Viewing results
 
-stargazer(j1x, j2x, j3x, j4x, j5x, j6x, type = 'text', omit = c('Country'))
+stargazer(j1x, j2x, j3x, j4x, type = 'text', omit = c('Country'))
 
 # Writing main results to file
 
-write.csv(stargazer(j1x, j2x, j3x, j4x, j5x, j6x, type = 'text'),
+write.csv(stargazer(j1x, j2x, j3x, j4x, type = 'text'),
           paste(directory, 'intensity_regression_results.txt'), row.names = FALSE)
-write.csv(stargazer(j1x, j2x, j3x, j4x, j5x, j6x),
+write.csv(stargazer(j1x, j2x, j3x, j4x),
           paste(directory, 'intensity_regression_results_tex.txt'), row.names = FALSE)
 
 # Creating figures for the paper
