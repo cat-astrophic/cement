@@ -30,10 +30,10 @@ plot(cement$Year,cement$Differenced)
 
 # Post variables
 
-cement$Post2004 <- as.numeric(cement$Year > 2004)
 cement$Post2005 <- as.numeric(cement$Year > 2005)
 cement$Post2006 <- as.numeric(cement$Year > 2006)
 cement$Post2007 <- as.numeric(cement$Year > 2007)
+cement$Post2008 <- as.numeric(cement$Year > 2008)
 
 # Running Carbon intensity regressions for cement manufacturing
 
@@ -46,16 +46,16 @@ i3 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading +
 i4 <- lm(Differenced ~ log(GDP.per.capita) + Kyoto.Rat*Post2007 + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output, data = cement)
 
 i5 <- lm(Differenced ~ log(GDP.per.capita) + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
-         + factor(Year), data = cement)
+         + factor(Year) + factor(Country), data = cement)
 
 i6 <- lm(Differenced ~ log(GDP.per.capita) + KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
-         + factor(Year), data = cement)
+         + factor(Year) + factor(Country), data = cement)
 
 i7 <- lm(Differenced ~ log(GDP.per.capita)*KP + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
-         + factor(Year), data = cement)
+         + factor(Year) + factor(Country), data = cement)
 
 i8 <- lm(Differenced ~ log(GDP.per.capita) + Kyoto.Rat*Post2007 + Lagged.R.D + Emissions.Trading + Real.Interest.Rate + Renewable.Electricity.Output
-         + factor(Year), data = cement)
+         + factor(Year) + factor(Country), data = cement)
 
 # Calculating robust standard errors
 
