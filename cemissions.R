@@ -6,6 +6,7 @@ library(sandwich)
 library(stargazer)
 library(ggplot2)
 library(lmtest)
+library(AER)
 
 # Reading in the panel data
 
@@ -161,33 +162,33 @@ cement <- cement[which(abs(cement$Real.Interest.Rate) < 50),]
 
 # Difference-in-differences models
 
-cement$Post2004 <- as.numeric(cement$Year > 2004)
 cement$Post2005 <- as.numeric(cement$Year > 2005)
 cement$Post2006 <- as.numeric(cement$Year > 2006)
 cement$Post2007 <- as.numeric(cement$Year > 2007)
+cement$Post2008 <- as.numeric(cement$Year > 2008)
 
 rar1 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2004 + factor(Year), data = cement)
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2005 + factor(Year) + factor(Country), data = cement)
 
 rar2 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2005 + factor(Year), data = cement)
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2006 + factor(Year) + factor(Country), data = cement)
 
 rar3 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2006 + factor(Year), data = cement)
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2007 + factor(Year) + factor(Country), data = cement)
 
 rar4 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
            + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2007 + factor(Year), data = cement)
+           + Forest.Rents + Tariff.Rate + Lagged.R.D + Emissions.Trading + Kyoto.Rat*Post2008 + factor(Year) + factor(Country), data = cement)
 
-rar1x <- coeftest(rar1, vcov = vcovCL, cluster = ~Country)
-rar2x <- coeftest(rar2, vcov = vcovCL, cluster = ~Country)
-rar3x <- coeftest(rar3, vcov = vcovCL, cluster = ~Country)
-rar4x <- coeftest(rar4, vcov = vcovCL, cluster = ~Country)
+rar1x <- coeftest(rar1, vcov = vcovCL, cluster = ~Kyoto.Rat)
+rar2x <- coeftest(rar2, vcov = vcovCL, cluster = ~Kyoto.Rat)
+rar3x <- coeftest(rar3, vcov = vcovCL, cluster = ~Kyoto.Rat)
+rar4x <- coeftest(rar4, vcov = vcovCL, cluster = ~Kyoto.Rat)
 
-stargazer(rar1x, rar2x, rar3x, rar4x, type = 'text')
+stargazer(rar1x, rar2x, rar3x, rar4x, type = 'text', omit = c('Year', 'Country'))
 
 write.csv(stargazer(rar1x, rar2x, rar3x, rar4x, type = 'text'), paste(directory, 'emissions_regression_results_DID.txt'), row.names = FALSE)
 
@@ -197,28 +198,57 @@ write.csv(stargazer(rar1x, rar2x, rar3x, rar4x), paste(directory, 'emissions_reg
 
 xrar1 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2004 + Kyoto.Rat*Emissions.Trading + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2005 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 xrar2 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2005 + Kyoto.Rat*Emissions.Trading + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2006 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 xrar3 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2006 + Kyoto.Rat*Emissions.Trading + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2007 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 xrar4 <- lm(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
             + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
-            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2007 + Kyoto.Rat*Emissions.Trading + factor(Year), data = cement)
+            + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2008 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-xrar1x <- coeftest(xrar1, vcov = vcovCL, cluster = ~Country)
-xrar2x <- coeftest(xrar2, vcov = vcovCL, cluster = ~Country)
-xrar3x <- coeftest(xrar3, vcov = vcovCL, cluster = ~Country)
-xrar4x <- coeftest(xrar4, vcov = vcovCL, cluster = ~Country)
+xrar1x <- coeftest(xrar1, vcov = vcovCL, cluster = ~Kyoto.Rat)
+xrar2x <- coeftest(xrar2, vcov = vcovCL, cluster = ~Kyoto.Rat)
+xrar3x <- coeftest(xrar3, vcov = vcovCL, cluster = ~Kyoto.Rat)
+xrar4x <- coeftest(xrar4, vcov = vcovCL, cluster = ~Kyoto.Rat)
 
-stargazer(xrar1x, xrar2x, xrar3x, xrar4x, type = 'text')
+stargazer(xrar1x, xrar2x, xrar3x, xrar4x, type = 'text', omit = c('Year', 'Country'))
 
 write.csv(stargazer(xrar1x, xrar2x, xrar3x, xrar4x, type = 'text'), paste(directory, 'emissions_regression_results_DID_2.txt'), row.names = FALSE)
 
 write.csv(stargazer(xrar1x, xrar2x, xrar3x, xrar4x), paste(directory, 'emissions_regression_results_DID_2_tex.txt'), row.names = FALSE)
+
+# Repeat with IV using ICC membership
+
+ixrar1 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2005 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar2 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2006 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar3 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2007 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar4 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
+                + Forest.Rents + Tariff.Rate + Lagged.R.D + Kyoto.Rat*Post2008 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar1x <- coeftest(ixrar1, vcov = vcovCL, cluster = ~Kyoto.Rat)
+ixrar2x <- coeftest(ixrar2, vcov = vcovCL, cluster = ~Kyoto.Rat)
+ixrar3x <- coeftest(ixrar3, vcov = vcovCL, cluster = ~Kyoto.Rat)
+ixrar4x <- coeftest(ixrar4, vcov = vcovCL, cluster = ~Kyoto.Rat)
+
+stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x, type = 'text', omit = c('Year', 'Country'))
+
+write.csv(stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x, type = 'text'), paste(directory, 'emissions_regression_results_DID_IV.txt'), row.names = FALSE)
+
+write.csv(stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x), paste(directory, 'emissions_regression_results_DID_IV_tex.txt'), row.names = FALSE)
 
