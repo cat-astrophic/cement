@@ -192,6 +192,39 @@ ggplot(data = df, aes(x = Year, y = value, color = variable)) +
 dev.copy(png, paste(directory, 'cement_fig_9.png'))
 dev.off()
 
+# Tenth plot - changes in production by treated status
+
+treated.prod <- c()
+control.prod <- c()
+years.prod <- c()
+
+for (i in 1990:2016) {
+  
+  tmp <- cement[which(cement$Year == i),]
+  tmp.t <- tmp[which(tmp$Kyoto.Rat == 1),]
+  tmp.c <- tmp[which(tmp$Kyoto.Rat == 0),]
+  treated.prod <- c(treated.prod, sum(tmp.t$Cement,na.rm = TRUE) / 1000000)
+  control.prod <- c(control.prod, sum(tmp.c$Cement, na.rm = TRUE) / 1000000)
+  years.prod <- c(years.prod, i)
+  
+}
+
+prodf <- data.frame(Year = c(years.prod), KP = c(treated.prod), C = c(control.prod))
+
+ggplot(data = prodf, aes(x = Year, y = value, color = variable)) + 
+  ggtitle('Cement Production by Kyoto Protocol Status') +
+  ylab('Cement Production (billion metric tons)') +
+  geom_line(aes(y = KP , col = 'Kyoto Protocol'), size = 2, alpha = 1) +
+  geom_line(aes(y = C , col = 'Non-KP'), size = 2, alpha = 1) +
+  theme(legend.position = c(.15,.85), plot.title = element_text(hjust = 0.5)) +
+  ylim(0,4) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
+  theme(legend.title = element_blank()) +
+  geom_vline(xintercept = 2008) +
+  geom_vline(xintercept = 2013)
+
+dev.copy(png, paste(directory, 'cement_fig_10.png'))
+dev.off()
+
 # Visualizing relationships between the data
 
 par(mfrow = c(2,2))
