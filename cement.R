@@ -7,6 +7,7 @@ library(stargazer)
 library(ggplot2)
 library(lmtest)
 library(AER)
+library(coeftest)
 
 # Reading in the panel data
 
@@ -343,4 +344,16 @@ stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x, type = 'text', omit = c('Year', 'C
 write.csv(stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x, type = 'text'), paste(directory, 'cement_regression_results_DID_IV.txt'), row.names = FALSE)
 
 write.csv(stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x), paste(directory, 'cement_regression_results_DID_IV_tex.txt'), row.names = FALSE)
+
+# Check the first stage F-stat
+
+c.cols <- c('Cement', 'Lagged.Cement', 'GDP.per.capita', 'Population', 'Real.Interest.Rate', 'Land.Area', 'CO2.Change',
+            'Renewable.Electricity.Output', 'Ores.and.Metals.Imports', 'Ores.and.Metals.Exports', 'Polity.Index',
+            'Forest.Rents', 'Tariff.Rate', 'Lagged.R.D', 'Kyoto.Rat', 'Emissions.Trading', 'ICC')
+
+cementx <- cement[,which(colnames(cement) %in% c.cols)]
+cementx <- cementx[which(complete.cases(cementx)),]
+
+oof <- lm(Kyoto.Rat ~ ICC, data = cementx)
+stargazer(oof, type = 'text')
 
