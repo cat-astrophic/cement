@@ -7,7 +7,7 @@ library(stargazer)
 library(ggplot2)
 library(lmtest)
 library(AER)
-library(coeftest)
+library(lmtest)
 
 # Reading in the panel data
 
