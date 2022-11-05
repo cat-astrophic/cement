@@ -265,3 +265,34 @@ cementx <- cementx[which(complete.cases(cementx)),]
 oof <- lm(Kyoto.Rat ~ ICC, data = cementx)
 stargazer(oof, type = 'text')
 
+# Repeat with IV using ICC membership with fewer controls to include more low income nations
+
+ixrar1 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Polity.Index + Kyoto.Rat*Post2005 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar2 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Polity.Index + Kyoto.Rat*Post2006 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar3 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Polity.Index + Kyoto.Rat*Post2007 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar4 <- ivreg(log(Cement.Emissions) ~ log(Lagged.Cement.Emissions) + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area) + CO2.Change
+                + Polity.Index + Kyoto.Rat*Post2008 + Kyoto.Rat*Emissions.Trading + factor(Year) + factor(Country) | . - Kyoto.Rat + ICC, data = cement)
+
+ixrar1x <- coeftest(ixrar1, vcov = vcovCL, cluster = ~Country)
+ixrar2x <- coeftest(ixrar2, vcov = vcovCL, cluster = ~Country)
+ixrar3x <- coeftest(ixrar3, vcov = vcovCL, cluster = ~Country)
+ixrar4x <- coeftest(ixrar4, vcov = vcovCL, cluster = ~Country)
+
+stargazer(ixrar1x, ixrar2x, ixrar3x, ixrar4x, type = 'text', omit = c('Year', 'Country'))
+stargazer(ixrar1, ixrar2, ixrar3, ixrar4, type = 'text', omit = c('Year', 'Country'))
+
+c.cols <- c('Cement.Emissions', 'Lagged.Cement.Emissions', 'GDP.per.capita', 'Population', 'Real.Interest.Rate',
+            'Land.Area', 'CO2.Change', 'Polity.Index','Kyoto.Rat', 'Emissions.Trading', 'ICC', 'Country')
+
+cementx <- cement[,which(colnames(cement) %in% c.cols)]
+cementx <- cementx[which(complete.cases(cementx)),]
+
+oof <- lm(Kyoto.Rat ~ ICC, data = cementx)
+stargazer(oof, type = 'text')
+
