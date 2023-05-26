@@ -159,19 +159,19 @@ plot(cement$Year,cement$Intensity)
 
 # Running Carbon intensity regressions for cement manufacturing
 
-j1 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+j1 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-j2 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+j2 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-j3 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+j3 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
-j4 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.Rat + I(log(GDP.per.capita)^2) + log(Population) + log(Land.Area) + CO2.Change
+j4 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.Rat + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
          + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
          + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
