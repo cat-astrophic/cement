@@ -118,19 +118,19 @@ cement$Ln.Cemissions <- log(cement$Cement.Emissions)
 
 # Running regressions for footprint
 
-lmod1 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2005 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+lmod1 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2005 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                 + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                 + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-lmod2 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2006 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+lmod2 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2006 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                 + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                 + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-lmod3 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+lmod3 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                 + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                 + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-lmod4 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2008 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+lmod4 <- ivreg(Ln.Footprint ~ Kyoto.Rat*post2008 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                 + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                 + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
@@ -155,19 +155,19 @@ write.csv(stargazer(lmod1x, lmod2x, lmod3x, lmod4x),
 
 cement$Net.Imports2 <- cement$Net.Imports / 1000
 
-l2mod1 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2005 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod1 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2005 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-l2mod2 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2006 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod2 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2006 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-l2mod3 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod3 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2007 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
-l2mod4 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2008 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate + log(Land.Area)
+l2mod4 <- ivreg(Net.Imports2 ~ Kyoto.Rat*post2008 + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + Real.Interest.Rate
                + Renewable.Electricity.Output + log(Ores.and.Metals.Imports) + log(Ores.and.Metals.Exports) + Polity.Index
                + Forest.Rents + Tariff.Rate + Lagged.R.D + factor(Year.x) + factor(Country.x) | . - Kyoto.Rat + ICC, data = cement)
 
