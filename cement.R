@@ -226,6 +226,26 @@ ggplot(data = prodf, aes(x = Year, y = value, color = variable)) +
 dev.copy(png, paste(directory, 'cement_fig_10.png'))
 dev.off()
 
+# Eleventh plot - changes in production by treated status relative to 1990 levels
+
+prodf2 <- as.data.frame(cbind(prodf$Year, prodf$KP / prodf$KP[1], prodf$C / prodf$C[1]))
+colnames(prodf2) <- c('Year', 'KP', 'C')
+
+ggplot(data = prodf2, aes(x = Year, y = value, color = variable)) + 
+  ggtitle('Cement Production by Kyoto Protocol Status') +
+  ylab('Cement Production (relative to 1990 levels)') +
+  geom_line(aes(y = KP , col = 'Kyoto Protocol'), size = 2, alpha = 1) +
+  geom_line(aes(y = C , col = 'Non-KP'), size = 2, alpha = 1) +
+  theme(legend.position = c(.15,.85), plot.title = element_text(hjust = 0.5)) +
+  ylim(0,6) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
+  theme(legend.title = element_blank()) +
+  geom_vline(xintercept = 2008) +
+  geom_vline(xintercept = 2013) +
+  geom_line(y = 1, col = 'black', size = 1, alpha = 1)
+
+dev.copy(png, paste(directory, 'cement_fig_11.png'))
+dev.off()
+
 # Visualizing relationships between the data
 
 par(mfrow = c(2,2))
