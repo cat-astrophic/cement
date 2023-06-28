@@ -44,7 +44,7 @@ names(Cint.df) <- c('Year', 'World', 'US', 'China')
 ggplot(data = Cint.df, aes(x = Year, y = value, color = variable)) +
   ggtitle('CO2 Emissions from Global Cement Production by Year') +
   ylab('CO2 Emissions (million metric tons of C)') +
-  geom_line(aes(y = World_W, col = 'Global Average'), size = 2, alpha = 1) +
+  geom_line(aes(y = World, col = 'Global Average'), size = 2, alpha = 1) +
   geom_line(aes(y = US, col = 'U.S.'), size = 2, alpha = 1) +
   geom_line(aes(y = China, col = 'China'), size = 2, alpha = 1) +
   theme(legend.position = c(0.2,0.2), plot.title = element_text(hjust = 0.5)) +
@@ -108,7 +108,8 @@ for (yr in 1990:2014) {
   
 }
 
-Cint.df <- data.frame(Year = c(yrs), High = c(hi), Low = c(li))
+Cint.df <- as.data.frame(cbind(unlist(yrs), unlist(hi), unlist(li)))
+colnames(Cint.df) <- c('Year', 'High', 'Low')
 
 ggplot(data = Cint.df[which(Cint.df$Year < 2008),], aes(x = Year, y = value)) +
   ggtitle('Relationship Between GDP per capita and Carbon Intensity\nPrior to the Kyoto Protocol') +
@@ -146,6 +147,36 @@ ggplot(data = Cint.df[which(Cint.df$Year < 2008 & Cint.df$Year > 1997),], aes(x 
 dev.copy(png, paste(directory, 'simulation_baseline.png'))
 dev.off()
 
+# Seventh plot -- intensities over time by treated status
+
+treated.int <- c()
+control.int <- c()
+years.int <- c()
+
+for (i in 1990:2014) {
+  
+  tmp <- cement[which(cement$Year == i),]
+  tmp.t <- tmp[which(tmp$Kyoto.Rat == 1),]
+  tmp.c <- tmp[which(tmp$Kyoto.Rat == 0),]
+  treated.int <- c(treated.int, sum(tmp.t$Intensity, na.rm = TRUE) / dim(tmp.t)[1])
+  control.int <- c(control.int, sum(tmp.c$Intensity, na.rm = TRUE) / dim(tmp.c)[1])
+  years.int <- c(years.int, i)
+  
+}
+
+intdf <- data.frame(Year = c(years.int), KP = c(treated.int), C = c(control.int))
+
+ggplot(data = intdf, aes(x = Year, y = value, color = variable)) + 
+  ggtitle('Carbon Intensity of Cement Production by Kyoto Protocol Status') +
+  ylab('Carbon Intensity of Cement Production') +
+  geom_line(aes(y = KP , col = 'Kyoto Protocol'), size = 2, alpha = 1) +
+  geom_line(aes(y = C , col = 'Non-KP'), size = 2, alpha = 1) +
+  theme(legend.position = c(.15,.85), plot.title = element_text(hjust = 0.5)) +
+  ylim(0.130,0.180) + scale_x_continuous(breaks = scales::pretty_breaks(n = 14)) +
+  theme(legend.title = element_blank()) +
+  geom_vline(xintercept = 2008) +
+  geom_vline(xintercept = 2013)
+
 # We remove anything above 99.5 percentile or below 0.5 percentile as outliers for regressions
 
 upper <- quantile(cement$Intensity, c(.995), na.rm = TRUE)
@@ -160,20 +191,20 @@ plot(cement$Year,cement$Intensity)
 # Running Carbon intensity regressions for cement manufacturing
 
 j1 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
-         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
+            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 j2 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita) + Kyoto.I.Rat.Phase.I + Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
-         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
+            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 j3 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.I.Rat.Phase.I + log(GDP.per.capita)*Kyoto.I.Rat.Phase.II + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
-         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
+            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 j4 <- ivreg(Intensity ~ Lagged.Intensity + log(GDP.per.capita)*Kyoto.Rat + I(log(GDP.per.capita)^2) + log(Population) + CO2.Change
-         + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
-         + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
+            + Urban.Population + Lagged.R.D + Real.Interest.Rate + Renewable.Electricity.Output + log(Ores.and.Metals.Exports)
+            + log(Ores.and.Metals.Imports) + Polity.Index + Forest.Rents + Tariff.Rate + Emissions.Trading + factor(Year) + factor(Country), data = cement)
 
 # Calculating robust standard errors
 
@@ -192,4 +223,3 @@ write.csv(stargazer(j1x, j2x, j3x, j4x, type = 'text'),
           paste(directory, 'intensity_regression_results.txt'), row.names = FALSE)
 write.csv(stargazer(j1x, j2x, j3x, j4x),
           paste(directory, 'intensity_regression_results_tex.txt'), row.names = FALSE)
-
