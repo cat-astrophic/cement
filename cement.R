@@ -204,7 +204,7 @@ for (i in 1990:2016) {
   tmp <- cement[which(cement$Year == i),]
   tmp.t <- tmp[which(tmp$Kyoto.Rat == 1),]
   tmp.c <- tmp[which(tmp$Kyoto.Rat == 0),]
-  treated.prod <- c(treated.prod, sum(tmp.t$Cement,na.rm = TRUE) / 1000000)
+  treated.prod <- c(treated.prod, sum(tmp.t$Cement, na.rm = TRUE) / 1000000)
   control.prod <- c(control.prod, sum(tmp.c$Cement, na.rm = TRUE) / 1000000)
   years.prod <- c(years.prod, i)
   
